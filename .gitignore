@@ -1,0 +1,8 @@
+.env
+.cursor
+.vscode
+
+node_modules
+
+build
+dist
