@@ -1,3 +1,4 @@
+import { homedir } from "node:os";
 import { loadEnvFile } from "node:process";
 
 type Transition = {
@@ -33,8 +34,6 @@ type CreateTicket = {
   fields: Fields;
 };
 
-const envPath = "/home/danirodr/.config/read-it.env";
-
 export class Jira {
   static #instance: Jira | null = null;
   static #url: string;
@@ -45,7 +44,7 @@ export class Jira {
 
   private constructor() {
     // load .env file first
-    loadEnvFile(envPath);
+    loadEnvFile(homedir() + "/.config/read-it.env");
 
     const { JIRA_URL, JIRA_PROJECT, JIRA_EPIC, JIRA_USER, JIRA_API_KEY } =
       process.env;
