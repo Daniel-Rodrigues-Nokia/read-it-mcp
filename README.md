@@ -11,22 +11,19 @@ This repository is the MCP-oriented sibling of [read-it](https://github.com/Dani
 - **Jira / Xray**: **Same `read-it.env` file as the read-it CLI**—same path on disk and the same variables. If read-it already works on your machine, you do not need a second env file or duplicate secrets for this MCP server. See [Configuration](#configuration).
 - **VS Code**: MCP support enabled and a way to edit your MCP server list (for example **Settings → MCP** or the `mcp.json` fragment your team uses for stdio servers).
 
-## 1. Install the executable (SEA)
+## Download & Run
 
-Build or obtain the **single-executable application (SEA)** bundle for this server (see [Node.js SEA](https://nodejs.org/api/single-executable-applications.html); same idea as packaging read-it’s MCP if you already do that). Copy the resulting script/binary into a directory you control, for example:
+Download the latest version from the [Releases](https://github.com/Daniel-Rodrigues-Nokia/read-it-mcp/releases) page.
 
-```bash
-mkdir -p "${HOME}/bin"
-cp /path/to/your-built-mcp.sea.js "${HOME}/bin/read-it-mcp.js"
-```
+## 1. Install the executable
 
-Adjust the source path to match whatever your SEA build produces. The important part is a **stable path** and the filename you use in VS Code `args` (here **`read-it-mcp.js`**).
+The release asset **`sum-ts-mcp.zip`** contains the bundled entrypoint **`index.js`** (and a small `package.json` next to it). Unzip it, then move those files into a directory you control and keep that layout—for example `${HOME}/bin/sum-ts-mcp/`. In the next step, the MCP server’s `args` must point at **`index.js` in that same directory** (use the full path to that file).
 
 ## 2. Register the server in VS Code
 
-Add a **stdio** server whose `args` point at the file from step 1. Use a **Node** binary that matches what you built against (for example the same version you use with nvm).
+Add a **stdio** server whose `args` use the path from step 1. Use a **Node** binary you are happy to run for this server (for example the same version you use with nvm).
 
-Example (adapt `command` to your machine; server id and script name match the keys below):
+Example (adapt `command` and the path in `args` to your machine):
 
 ```json
 {
@@ -34,7 +31,7 @@ Example (adapt `command` to your machine; server id and script name match the ke
     "sum-cypress-tests": {
       "type": "stdio",
       "command": "${env:HOME}/.nvm/versions/node/v22.14.0/bin/node",
-      "args": ["${env:HOME}/bin/read-it-mcp.js"],
+      "args": ["${env:HOME}/bin/sum-ts-mcp/index.js"],
       "cwd": "${workspaceFolder}",
       "dev": {
         "debug": {
@@ -49,8 +46,8 @@ Example (adapt `command` to your machine; server id and script name match the ke
 
 Notes:
 
-- **`command`**: Full path to `node` (nvm, fnm, system Node, etc.).
-- **`args`**: First element must be the SEA (or bundled entry) you copied in step 1 (for example `${env:HOME}/bin/read-it-mcp.js`).
+- **`command`**: Full path to `node`.
+- **`args`**: First element is the full path to `index.js` in the directory you chose in step 1.
 - **`cwd`**: `${workspaceFolder}` keeps the server rooted in the repo you have open; change if you need a fixed directory.
 
 Restart or reload the MCP connection in VS Code after saving.
