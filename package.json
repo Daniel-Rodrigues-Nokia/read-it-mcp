@@ -9,6 +9,7 @@
   "scripts": {
     "build": "esbuild src/index.ts --bundle --platform=node --format=esm --packages=external --minify --outfile=build/index.js",
     "build:watch": "npm run build -- --watch",
+    "compile": "npm run build && ncc build build/index.js -o dist -m",
     "dev": "tsx src/index.ts",
     "inspect": "set DANGEROUSLY_OMIT_AUTH=true && npx @modelcontextprotocol/inspector npm run dev"
   },
@@ -19,6 +20,7 @@
   "devDependencies": {
     "@modelcontextprotocol/inspector": "^0.17.2",
     "@types/node": "^24.10.1",
+    "@vercel/ncc": "^0.38.4",
     "esbuild": "^0.27.2",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
