@@ -32,20 +32,20 @@ jobs:
         run: npm ci
 
       - name: Build (Linux)
-        if: matrix.os == "ubuntu-latest"
+        if: matrix.os == 'ubuntu-latest'
         run: npm run compile
 
       - name: Package Linux
-        if: matrix.os == "ubuntu-latest"
+        if: matrix.os == 'ubuntu-latest'
         run: |
           mkdir release
           cp dist/index.js dist/package.json release/
-          zip -j sum-ts-mcp.zip release/*
+          zip -j read-it-mcp.zip release/*
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: sum-ts-mcp
+          name: read-it-mcp
           path: "*.zip"
 
   release:
